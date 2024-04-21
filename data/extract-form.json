@@ -1,0 +1,47 @@
+{
+    "name": "extract_menu_items",
+    "description": "Extract menu items from an image of a food menu.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "menuSections": {
+                "type": "array",
+                "description": "An array of menu sections extracted from the image",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "sectionTitle": {
+                            "type": "string",
+                            "description": "The name of the menu section (e.g., Starters, Main Courses, Quick Menu, Fish, Beef, Desserts, Drinks, Others)"
+                        },
+                        "menuItems": {
+                            "type": "array",
+                            "description": "List of items within this section",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "itemName": {
+                                        "type": "string",
+                                        "description": "The name of the menu item"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "A brief description of the menu item"
+                                    },
+                                    "price": {
+                                        "type": "number",
+                                        "description": "Price of the item"
+                                    },
+                                    "additionalInfo": {
+                                        "type": "string",
+                                        "description": "Any additional information about the item (e.g., spicy level, chef's recommendation)"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
