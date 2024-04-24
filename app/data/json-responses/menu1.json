@@ -1,0 +1,134 @@
+{
+    "name": "extract_menu_items",
+    "description": "Extract menu items from an image of a food menu.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "menuSections": {
+          "type": "array",
+          "description": "An array of menu sections extracted from the image",
+          "items": [
+            {
+              "sectionTitle": "Nan",
+              "menuItems": [
+                {
+                  "itemName": "Nan",
+                  "description": "",
+                  "price": 300,
+                  "additionalInfo": ""
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Quick Menu",
+              "menuItems": [
+                {
+                  "itemName": "Chicken/Keema/Dal/Vegetable/Sag",
+                  "description": "Quick menu options",
+                  "price": 400,
+                  "additionalInfo": "Upgrade for +60"
+                },
+                {
+                  "itemName": "Butter Chicken / Mutton",
+                  "description": "Quick menu non-veg options",
+                  "price": 180,
+                  "additionalInfo": "Add on, select your sides"
+                }
+              ]
+            },
+            {
+              "sectionTitle": "A Set",
+              "menuItems": [
+                {
+                  "itemName": "Curry Rice Box",
+                  "description": "",
+                  "price": 500,
+                  "additionalInfo": "Top up with half boiled egg +300"
+                },
+                {
+                  "itemName": "Tandoori Chicken Don",
+                  "description": "",
+                  "price": 750,
+                  "additionalInfo": ""
+                }
+              ]
+            },
+            {
+              "sectionTitle": "B Set",
+              "menuItems": [
+                {
+                  "itemName": "Curry Rice with Nan",
+                  "description": "",
+                  "price": 680,
+                  "additionalInfo": ""
+                }
+              ]
+            },
+            {
+              "sectionTitle": "C Set",
+              "menuItems": [
+                {
+                  "itemName": "Curry Rice with Half Fried Egg",
+                  "description": "",
+                  "price": 730,
+                  "additionalInfo": ""
+                },
+                {
+                  "itemName": "Curry Rice with Nan & Tandoori Chicken",
+                  "description": "",
+                  "price": 780,
+                  "additionalInfo": ""
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Individual Items",
+              "menuItems": [
+                {
+                  "itemName": "Curry Don",
+                  "description": "",
+                  "price": 650,
+                  "additionalInfo": ""
+                },
+                {
+                  "itemName": "Indian Locomo",
+                  "description": "",
+                  "price": 680,
+                  "additionalInfo": ""
+                },
+                {
+                  "itemName": "Cheese Nan",
+                  "description": "",
+                  "price": 650,
+                  "additionalInfo": ""
+                }
+              ]
+            },
+            {
+              "sectionTitle": "Drinks",
+              "menuItems": [
+                {
+                  "itemName": "Lassi",
+                  "description": "",
+                  "price": 200,
+                  "additionalInfo": ""
+                },
+                {
+                  "itemName": "Mango Lassi",
+                  "description": "",
+                  "price": 250,
+                  "additionalInfo": ""
+                },
+                {
+                  "itemName": "Ice Coffee",
+                  "description": "",
+                  "price": 180,
+                  "additionalInfo": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
