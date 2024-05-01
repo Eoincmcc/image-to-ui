@@ -1,20 +1,15 @@
 // menuCard.tsx
-
 import React from "react";
 import { RestaurantData } from "@/lib/types";
 
 const MenuCard: React.FC<RestaurantData> = ({ menuSections, restaurantType }) => {
 	return (
-		<div className="menu-container">
-			<section
-				className="flex flex-col gap-3 rounded-md bg-white p-6 pt-4 shadow transition-opacity duration-200"
-			>
+		<div className="menu-container flex max-w-2xl flex-col gap-8 p-4">
+			<section className="flex flex-col gap-3 rounded-md bg-white p-6 pt-4 shadow transition-opacity duration-200">
 				<h2 className="text-lg font-semibold tracking-wide text-gray-900">{restaurantType}</h2>
 			</section>
 			{menuSections.map((section, index) => (
-				<section
-					className="flex flex-col gap-3 rounded-md bg-white p-6 pt-4 shadow transition-opacity duration-200"
-				>
+				<section className="flex flex-col gap-3 rounded-md bg-white p-6 pt-4 shadow transition-opacity duration-200">
 					<div key={index} className="menu-section flex flex-col gap-6">
 						<h2 className="section-title text-lg font-semibold tracking-wide text-gray-900 ">{section.sectionTitle}</h2>
 						{section.menuItems.map((item, itemIndex) => (

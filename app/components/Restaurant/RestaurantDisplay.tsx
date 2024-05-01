@@ -13,13 +13,11 @@ export const RestaurantDisplay = (restaurantData: RestaurantData) => {
 			"flex justify-center scrollbar scrollbar-track-gray-100 scrollbar-w-3 md:h-[calc(100vh-var(--top-nav-bar-height))] md:justify-end md:overflow-y-scroll",
 			isHover && "scrollbar-thumb-gray-200"
 		)}>
-			<section className="flex max-w-2xl flex-col gap-8 p-4">
-				{restaurantData.menuSections.length > 0 ? (
-					<MenuCard menuSections={restaurantData.menuSections} restaurantType={restaurantData.restaurantType} />
-				) : (
-					<p>No menu data to display.</p>
-				)}
-			</section>
+			{restaurantData.menuSections.length > 0 ? (
+				<MenuCard menuSections={restaurantData.menuSections} restaurantType={restaurantData.restaurantType} />
+			) : (
+				<p>No menu data to display.</p>
+			)}
 			<FlexboxSpacer maxWidth={50} className="hidden md:block" />
 		</div>
 	);
