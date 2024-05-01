@@ -14,9 +14,8 @@ export const RestaurantDisplay = (restaurantData: RestaurantData) => {
 			isHover && "scrollbar-thumb-gray-200"
 		)}>
 			<section className="flex max-w-2xl flex-col gap-8 p-4">
-				<h2>{restaurantData.restaurantType}</h2>
 				{restaurantData.menuSections.length > 0 ? (
-					<MenuCard menuSections={restaurantData.menuSections} restaurantType={""} />
+					<MenuCard menuSections={restaurantData.menuSections} restaurantType={restaurantData.restaurantType} />
 				) : (
 					<p>No menu data to display.</p>
 				)}

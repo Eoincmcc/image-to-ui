@@ -3,9 +3,14 @@
 import React from "react";
 import { RestaurantData } from "@/lib/types";
 
-const MenuCard: React.FC<RestaurantData> = ({ menuSections }) => {
+const MenuCard: React.FC<RestaurantData> = ({ menuSections, restaurantType }) => {
 	return (
 		<div className="menu-container">
+			<section
+				className="flex flex-col gap-3 rounded-md bg-white p-6 pt-4 shadow transition-opacity duration-200"
+			>
+				<h2 className="text-lg font-semibold tracking-wide text-gray-900">{restaurantType}</h2>
+			</section>
 			{menuSections.map((section, index) => (
 				<section
 					className="flex flex-col gap-3 rounded-md bg-white p-6 pt-4 shadow transition-opacity duration-200"
