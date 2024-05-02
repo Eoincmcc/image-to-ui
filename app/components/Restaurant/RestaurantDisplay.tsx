@@ -6,7 +6,7 @@ import { FlexboxSpacer } from "@/app/components/FlexboxSpacer";
 import { cx } from "@/lib/cx";
 
 export const RestaurantDisplay = (restaurantData: RestaurantData) => {
-	console.log(restaurantData);
+	//console.log(restaurantData);
 	const [isHover, setIsHover] = React.useState(false);
 	return (
 		<div className={cx(

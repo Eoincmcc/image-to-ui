@@ -10,36 +10,37 @@ export const ImageConverter = () => {
 	const [isLoading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
-	async function handleImageUpload(base64Image: string) {
+	async function handleImageUpload(menuImage: string) {
 		console.log("Image uploaded");
+		// convert menu image to  64 encoded string
 		setLoading(true);
 		setError(null);
 		try {
-			// try to fetch local data
-			const localDataResponse = await fetch("api/localData");
-			if (localDataResponse.ok) {
-				const localData = await localDataResponse.json();
-				if (localData.data !== null) {
-					console.log("Using local data", localData.input_schema.properties);
-					setMenu(localData.input_schema.properties);
-					setLoading(false);
-					console.log("Local data loaded");
-					setUseLocalData(true);
+			if (process.env.USE_LOCAL_DATA) {
+				const localDataResponse = await fetch("api/localData");
+				if (localDataResponse.ok) {
+					const localData = await localDataResponse.json();
+					if (localData.data !== null) {
+						console.log("Using local data", localData.input_schema.properties);
+						setMenu(localData.input_schema.properties);
+						setLoading(false);
+						console.log("Local data loaded");
+						//setUseLocalData(true);
+					}
 				}
-			}
-			if (!useLocalData) {
+			} else {
 				// If local data is not available, proceed with the original POST request
-				const response = await fetch("api/analyzeMenu", {
+				const response = await fetch("api/geminiAnalyze", {
 					method: "POST",
 					headers: {
 						"Content-Type": "application/json"
 					},
-					body: JSON.stringify({ image: base64Image })
+					body: JSON.stringify({ image: menuImage })
 				});
 				if (!response.ok) throw new Error('Network response was not ok');
 				const data = await response.json();
-				console.log("Received data from API", data);
-				setMenu(data.input_schema.properties);
+				console.log("Received data from API", JSON.stringify(data));
+				setMenu(data);
 			}
 		} catch (err) {
 			console.error("Failed to fetch: ", err);

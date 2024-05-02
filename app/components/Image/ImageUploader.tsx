@@ -4,11 +4,12 @@ import React from 'react';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 
 interface ImageUploaderProps {
-	onImageUpload: (base64Image: string) => void;
+	onImageUpload: (menuImage: string) => void;
 }
 
 export const ImageUploader = ({ onImageUpload }: ImageUploaderProps) => {
 	const [image, setImage] = useState<string>("");
+	const [baseFile, setFile] = useState<string>("");
 
 	function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
 		if (event.target.files === null) {
@@ -17,10 +18,12 @@ export const ImageUploader = ({ onImageUpload }: ImageUploaderProps) => {
 		}
 		const file = event.target.files[0];
 		const reader = new FileReader();
+
 		reader.readAsDataURL(file);
 		reader.onload = () => {
 			if (typeof reader.result === "string") {
 				setImage(reader.result);
+				setFile((reader.result as string).split(',')[1]);
 			}
 		};
 		reader.onerror = (error) => {
@@ -36,7 +39,7 @@ export const ImageUploader = ({ onImageUpload }: ImageUploaderProps) => {
 			alert("Please select an image to upload.");
 			return;
 		}
-		onImageUpload(image);
+		onImageUpload(baseFile);
 	}
 
 	return (

@@ -5,7 +5,6 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function POST(request: Request) {
 	try {
-		console.log('Request body:', request.body);
 		const { image } = await request.json();
 
 		const formatDescription = JSON.stringify(extractForm, null, 2);
