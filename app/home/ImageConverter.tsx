@@ -5,14 +5,12 @@ import { useState } from "react";
 import { RestaurantData } from "@/lib/types";
 
 export const ImageConverter = () => {
-	const [useLocalData, setUseLocalData] = useState(false);
 	const [menu, setMenu] = useState<RestaurantData | null>(null);
 	const [isLoading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
 	async function handleImageUpload(menuImage: string) {
 		console.log("Image uploaded");
-		// convert menu image to  64 encoded string
 		setLoading(true);
 		setError(null);
 		try {
@@ -25,11 +23,9 @@ export const ImageConverter = () => {
 						setMenu(localData.input_schema.properties);
 						setLoading(false);
 						console.log("Local data loaded");
-						//setUseLocalData(true);
 					}
 				}
 			} else {
-				// If local data is not available, proceed with the original POST request
 				const response = await fetch("api/geminiAnalyze", {
 					method: "POST",
 					headers: {

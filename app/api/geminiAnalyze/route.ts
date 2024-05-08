@@ -6,47 +6,21 @@ import {
 	FunctionCallingMode,
 	GoogleGenerativeAI,
 } from "@google/generative-ai";
+import dedent from "dedent";
+import { menu } from "@/lib/schemas";
 
 
 const MODEL_NAME = "gemini-1.5-pro-vision-latest";
 const API_KEY = process.env.GOOGLE_GEMINI_KEY || "";
 
 export async function POST(request: Request) {
-	// Set a default value if the environment variable is undefined
-	const API_KEY = process.env.GOOGLE_GEMINI_KEY || "";
 	const genAI = new GoogleGenerativeAI(API_KEY);
 	const { image } = await request.json();
-	const imageMimeType = getMimeType(image) || 'image/jpeg';
+	const imageMimeType = getMimeType(image);
 
-	console.log("image mime type: ", getMimeType(image));
-
-	let menuItems: FunctionDeclarationSchema = {
-		type: schemaType.OBJECT,
-		properties: {
-			"itemName": { type: schemaType.STRING },
-			"description": { type: schemaType.STRING },
-			"price": { type: schemaType.NUMBER },
-			"additionalInfo": { type: schemaType.STRING },
-		},
-		required: ["itemName", "price"],
-	};
-	let sections: FunctionDeclarationSchema = {
-		type: schemaType.OBJECT,
-		properties: {
-			"sectionTitle": { type: schemaType.STRING },
-			"menuItems": { type: schemaType.ARRAY, items: menuItems },
-		},
-	};
-	let menu: FunctionDeclarationSchema = {
-		type: schemaType.OBJECT,
-		properties: {
-			"restaurantType": { type: schemaType.STRING },
-			"menuSections": { type: schemaType.ARRAY, items: sections },
-		},
-	};
 	let extractMenu: FunctionDeclaration = {
 		name: "extract_menu_items",
-		description: "Extract menu items from an image of a food menu.",
+		description: "Translate menu items from an image of a food menu.",
 		parameters: menu,
 	};
 	let menuTool: FunctionDeclarationsTool = {
@@ -61,9 +35,6 @@ export async function POST(request: Request) {
 	const prompt = {
 		role: "user",
 		parts: [
-			{
-				text: "Please extract menu items with additional information where possible from this image in English JSON describing the menu items from a restaurant using the following Schema:"
-			},
 			{ text: "Image: " },
 			{
 				inlineData: {
@@ -71,15 +42,31 @@ export async function POST(request: Request) {
 					data: image
 				}
 			},
+			{
+				text: "Translate the menu in the image from Japanese into English following the JSON schema."
+			},
 		],
+	};
+	const system = {
+		role: "system",
+		parts: [
+			{
+				text: dedent`
+				You are a Japanese restaurant owner who wants to digitize their entire menu into English. 
+				It should be organised sensibly closely aligning the schema tool as much as possible. 
+				You have an image of a menu and want to convert it to json following the schema tool.
+				`
+			}
+		]
 	};
 	try {
 		const result = await model.generateContent({
 			contents: [prompt],
 			// toolConfig: { functionCallingConfig: { mode: FunctionCallingMode.ANY } },
+			systemInstruction: system,
 		});
-		console.log(result.response);
-		const fc = result.response.candidates?.[0]?.content.parts[0]?.functionCall;
+
+		const fc = result.response.candidates?.[0]?.content.parts[0]?.functionCall?.args;
 		return new Response(JSON.stringify(fc));
 
 	} catch (error: any) {
@@ -104,8 +91,7 @@ const getMimeType = (base64: string) => {
 	for (const sign in signatures) {
 		if (base64.startsWith(sign)) {
 			return signatures[sign];
-		} else {
-			return 'image/jpeg';
 		}
 	}
+	return 'image/jpeg';
 };

@@ -6,7 +6,6 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 export async function POST(request: Request) {
 	try {
 		const { image } = await request.json();
-
 		const formatDescription = JSON.stringify(extractForm, null, 2);
 
 		const response = await openai.chat.completions.create({
@@ -33,7 +32,13 @@ export async function POST(request: Request) {
 		});
 
 		// Ensure that a response object is returned in the correct format
-		return new Response(response.choices[0].message.content);
+		console.log('Response:', response.choices[0].message.content);
+		const responseJson = JSON.parse(response.choices[0].message.content ?? '');
+		if (!responseJson || typeof responseJson !== 'object') {
+			throw new Error('Invalid response from OpenAI');
+		}
+		return new Response(JSON.stringify(responseJson.parameters.properties));
+		// return new Response(response.choices[0].message.content);
 	} catch (error: any) {
 		console.error('Error handling request:', error);
 
